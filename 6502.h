@@ -51,7 +51,8 @@ enum INSTRS
 	STY_ZPX = 0x94,			// store y register into memory  (zero page + x register addressing mode)
 	STY_ABS = 0x8C,			// store y register into memory  (absolute addressing mode)
 
-	JSR = 0x20			// jump to subroutine
+	JSR = 0x20,			// jump to subroutine
+	RTS = 0x60			// return from subroutine
 };
 
 enum FLAGS
@@ -68,7 +69,7 @@ enum FLAGS
 struct CPU
 {
 	word pc;				// program counter
-	word sp;				// stack pointer
+	byte sp;				// stack pointer
 
 	byte acc;				// accumulator
 	byte x;
@@ -80,8 +81,15 @@ struct CPU
 
 struct memory
 {
-	byte* Data;
+	byte Data[MAX_MEM];
 };
+
+void WriteWord(const word, const word, struct memory*, size_t*);
+word ReadWord(struct memory*, const word, size_t*);
+
+word SPtoWord(struct CPU*);
+void pushPCToStack(struct CPU*, struct memory*, size_t*);
+word popWordFromStack(struct CPU*, struct memory*, size_t*);
 
 
 void ResetCpu(struct CPU* cpu, struct memory* mem);
