@@ -34,14 +34,14 @@ static word FetchWord(struct CPU* cpu, struct memory* mem, size_t* Cycles)
 	return Data;
 }
 
-static void WriteWord(const word Address, const word data, struct memory* mem, size_t* Cycles)
+void WriteWord(const word Address, const word data, struct memory* mem, size_t* Cycles)
 {
 	mem->Data[Address] = data & 0x00FF;
 	mem->Data[Address + 1] = data >> 8;
 	(*Cycles) -= 2;
 }
 
-static word ReadWord(struct memory* mem, const word Address, size_t* cycles)
+word ReadWord(struct memory* mem, const word Address, size_t* cycles)
 {
 	byte LowByte = ReadByte(Address, mem, cycles);
 	byte HighByte = ReadByte(Address + 1, mem, cycles);
@@ -58,12 +58,12 @@ static void SetStatusFlags(struct CPU* cpu, const byte reg)
 void ResetCpu(struct CPU* cpu, struct memory* mem)
 {
 	cpu->pc = 0xFFFC;
-	cpu->sp = 0x0100;
+	cpu->sp = 0xFF;
 	cpu->acc = cpu->x = cpu->y = 0;
 
 	memset(cpu->Flags, 0, sizeof(cpu->Flags));
-
-	mem->Data = (byte*)malloc(sizeof(struct memory) * MAX_MEM);
+	memset(mem->Data, 0, sizeof(mem->Data));
+	
 	memset(mem->Data, 0, sizeof(mem->Data));
 }
 
@@ -305,10 +305,15 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 		case JSR:
 		{
 			word SubroutineAddress = FetchWord(cpu, mem, &cycles);
-			WriteWord(cpu->pc - 1, cpu->sp, mem, &cycles);
-			cpu->sp += 2;
+			pushPCToStack(cpu, mem, &cycles);
 			cpu->pc = SubroutineAddress;
 			cycles--;
+		} break;
+		case RTS:
+		{
+			word ReturnAddress = popWordFromStack(cpu, mem, &cycles);
+			cpu->pc = ReturnAddress + 1;
+			cycles -= 2;
 		} break;
 		default:
 		{
