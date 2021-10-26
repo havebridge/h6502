@@ -96,22 +96,22 @@ static void gtestStoreRegisterAbsolute(struct CPU* cpu, struct memory* mem, byte
 }
 
 
-TEST(testStoreReg, STA_ZP_TEST)						// STA zero page
+TEST(testStoreRegister, STA_ZP_TEST)						// STA zero page
 {
 	gtestStoreRegisterZP(&gtestStorecpu, &gtestStoremem, STA_ZP, &gtestStorecpu.acc);
 }
 
-TEST(testStoreReg, STA_ZPX_TEST)					// STA zero page + x register
+TEST(testStoreRegister, STA_ZPX_TEST)					// STA zero page + x register
 {
 	gtestStoreRegisterZPX(&gtestStorecpu, &gtestStoremem, STA_ZPX, &gtestStorecpu.acc);
 }
 
-TEST(testStoreReg, STA_ABS_TEST)					// STA absolute
+TEST(testStoreRegister, STA_ABS_TEST)					// STA absolute
 {
 	gtestStoreRegisterAbsolute(&gtestStorecpu, &gtestStoremem, STA_ABS, &gtestStorecpu.acc);
 }
 
-TEST(testStoreReg, STA_ABSX_TEST)					// STA absolute + x register
+TEST(testStoreRegister, STA_ABSX_TEST)					// STA absolute + x register
 {
 	ResetCpu(&gtestStorecpu, &gtestStoremem);
 
@@ -133,7 +133,7 @@ TEST(testStoreReg, STA_ABSX_TEST)					// STA absolute + x register
 	CheckStatusFlag(gtestStorecpu, cpuCopy);
 }
 
-TEST(testStoreReg, STA_ABSY_TEST)					// STA absolute + y register
+TEST(testStoreRegister, STA_ABSY_TEST)					// STA absolute + y register
 {
 	ResetCpu(&gtestStorecpu, &gtestStoremem);
 
@@ -155,38 +155,38 @@ TEST(testStoreReg, STA_ABSY_TEST)					// STA absolute + y register
 	CheckStatusFlag(gtestStorecpu, cpuCopy);
 }
 
-TEST(testStoreReg, STX_ZP_TEST)						// STX zero page
+TEST(testStoreRegister, STX_ZP_TEST)						// STX zero page
 {
 	gtestStoreRegisterZP(&gtestStorecpu, &gtestStoremem, STX_ZP, &gtestStorecpu.x);
 }
 
-TEST(testStoreReg, STX_ZPY_TEST)					// STX zero page + y register
+TEST(testStoreRegister, STX_ZPY_TEST)					// STX zero page + y register
 {
 	gtestStoreRegisterZP(&gtestStorecpu, &gtestStoremem, STX_ZPY, &gtestStorecpu.x);
 }
 
-TEST(testStoreReg, STX_ABS_TEST)					// STX absolute
+TEST(testStoreRegister, STX_ABS_TEST)					// STX absolute
 {
 	gtestStoreRegisterAbsolute(&gtestStorecpu, &gtestStoremem, STX_ABS, &gtestStorecpu.x);
 }
 
-TEST(testStoreReg, STY_ZP_TEST)						// STY zero page
+TEST(testStoreRegister, STY_ZP_TEST)						// STY zero page
 {
 	gtestStoreRegisterZP(&gtestStorecpu, &gtestStoremem, STY_ZP, &gtestStorecpu.y);
 }
 
-TEST(testStoreReg, STY_ZPX_TEST)					// STY zero page + x register
+TEST(testStoreRegister, STY_ZPX_TEST)					// STY zero page + x register
 {
 	gtestStoreRegisterZPX(&gtestStorecpu, &gtestStoremem, STY_ZPX, &gtestStorecpu.y);
 }
 
-TEST(testStoreReg, STY_ABS_TEST)					// STY absolute
+TEST(testStoreRegister, STY_ABS_TEST)					// STY absolute
 {
 	gtestStoreRegisterAbsolute(&gtestStorecpu, &gtestStoremem, STY_ABS, &gtestStorecpu.y);
 }
 
 
-TEST(testStoreReg, STA_INDX_TEST)					// STA indirect x
+TEST(testStoreRegister, STA_INDX_TEST)					// STA indirect x
 {
 	ResetCpu(&gtestStorecpu, &gtestStoremem);
 
@@ -210,7 +210,7 @@ TEST(testStoreReg, STA_INDX_TEST)					// STA indirect x
 }
 
 
-TEST(testStoreReg, STA_INDY_TEST)					// STA indirect y
+TEST(testStoreRegister, STA_INDY_TEST)					// STA indirect y
 {
 	ResetCpu(&gtestStorecpu, &gtestStoremem);
 
