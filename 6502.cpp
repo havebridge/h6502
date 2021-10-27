@@ -315,6 +315,17 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 			cpu->pc = ReturnAddress + 1;
 			cycles -= 2;
 		} break;
+		case JMP_ABS:
+		{
+			word Address = FetchWord(cpu, mem, &cycles);
+			cpu->pc = Address;
+		} break;
+		case JMP_IND:
+		{
+			word Address = FetchWord(cpu, mem, &cycles);
+			Address = ReadWord(mem, Address, &cycles);
+			cpu->pc = Address;
+		} break;
 		default:
 		{
 			printf("Instruction not handled %d\n", Instruction);
