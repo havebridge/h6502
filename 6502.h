@@ -52,10 +52,10 @@ enum INSTRS
 	STY_ABS = 0x8C,			// store y register into memory  (absolute addressing mode)
 
 	JSR = 0x20,			// jump to subroutine
-	RTS = 0x60,			// return from subroutine
-	JMP_ABS = 0x4C,		// jump to address (absolute addressing mode)
-	JMP_IND = 0x6C		// jump to address (indexed-indirect addressing mode)
-};
+	RTS = 0x60,				// return from subroutine
+	JMP_ABS = 0x4C,			// jump to address (absolute addressing mode)
+	JMP_IND = 0x6C			// jump to address (indexed-indirect addressing mode)
+};	
 
 enum FLAGS
 {
