@@ -19,3 +19,18 @@ word popWordFromStack(struct CPU* cpu, struct memory* mem, size_t* Cycles)
 	(*Cycles)--;
 	return ReturnValue;
 }
+
+void pushByteOntoStack(byte value, struct CPU* cpu, struct memory* mem, size_t* Cycles)
+{
+	mem->Data[SPtoWord(cpu)] = value;
+	cpu->sp--;
+	(*Cycles) -= 2;
+}
+
+byte popByteOntoStack(struct CPU* cpu, struct memory* mem, size_t* Cycles)
+{
+	byte value = mem->Data[SPtoWord(cpu)];
+	cpu->sp++;
+	(*Cycles)--;
+	return value;
+}
