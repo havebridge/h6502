@@ -51,12 +51,12 @@ enum INSTRS
 	STY_ZPX = 0x94,			// store y register into memory  (zero page + x register addressing mode)
 	STY_ABS = 0x8C,			// store y register into memory  (absolute addressing mode)
 
-	TSX = 0xBA,				// transfer stack pointer to x register
-	TXS = 0x9A,				// transfer x register to stack pointer
-	PHA = 0x48,				// push accumulator onto the stack
-	PHP = 0x08,				// push copy of the status flags on to the stack
-	PLA = 0x68,				// pull accumulator from the stack
-	PLP = 0x28,				// pull copy of the status flags from the stack
+	TSX = 0xBA,			// transfer stack pointer to x register
+	TXS = 0x9A,			// transfer x register to stack pointer
+	PHA = 0x48,			// push accumulator onto the stack
+	PHP = 0x08,			// push copy of the status flags on to the stack
+	PLA = 0x68,			// pull accumulator from the stack
+	PLP = 0x28,			// pull copy of the status flags from the stack
 
 
 	JSR = 0x20,			// jump to subroutine
