@@ -51,7 +51,7 @@ word ReadWord(struct memory* mem, const word Address, size_t* cycles)
 static void SetStatusFlags(struct CPU* cpu, const byte reg)
 {
 	cpu->Flags[zeroFlag] = (reg == 0);
-	cpu->Flags[negativeFlag - 1] = (reg & 0x80) < 0; // not working because number that are bigger than 128 will detect as negative
+	cpu->Flags[negativeFlag - 1] = (reg & 0x80) > 0; // not working because number that are bigger than 128 will detect as negative
 }
 
 
@@ -301,6 +301,33 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 			word EffectiveAddress = ReadWord(mem, ZeroPageAddress, &cycles);
 			WriteByte(EffectiveAddress + cpu->y, cpu->acc, mem, &cycles);
 			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case TSX:
+		{
+			cpu->x = cpu->sp;
+			cycles--;
+			SetStatusFlags(cpu, cpu->x);
+		} break;
+		case TXS:
+		{
+			cpu->sp = cpu->x;
+			cycles--;
+		} break;
+		case PHA:
+		{
+			pushByteOntoStack(cpu->acc, cpu, mem, &cycles);
+		} break;
+		case PHP:
+		{
+			pushByteOntoStack(*cpu->Flags, cpu, mem, &cycles);
+		} break;
+		case PLA:
+		{
+			cpu->acc = popByteOntoStack(cpu, mem, &cycles);
+		} break;
+		case PLP:
+		{
+			*cpu->Flags = popByteOntoStack(cpu, mem, &cycles);
 		} break;
 		case JSR:
 		{
