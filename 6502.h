@@ -51,6 +51,14 @@ enum INSTRS
 	STY_ZPX = 0x94,			// store y register into memory  (zero page + x register addressing mode)
 	STY_ABS = 0x8C,			// store y register into memory  (absolute addressing mode)
 
+	TSX = 0xBA,				// transfer stack pointer to x register
+	TXS = 0x9A,				// transfer x register to stack pointer
+	PHA = 0x48,				// push accumulator onto the stack
+	PHP = 0x08,				// push copy of the status flags on to the stack
+	PLA = 0x68,				// pull accumulator from the stack
+	PLP = 0x28,				// pull copy of the status flags from the stack
+
+
 	JSR = 0x20,			// jump to subroutine
 	RTS = 0x60,			// return from subroutine
 	JMP_ABS = 0x4C,			// jump to address (absolute addressing mode)
@@ -92,7 +100,8 @@ word ReadWord(struct memory*, const word, size_t*);
 word SPtoWord(struct CPU*);
 void pushPCToStack(struct CPU*, struct memory*, size_t*);
 word popWordFromStack(struct CPU*, struct memory*, size_t*);
-
+void pushByteOntoStack(byte, struct CPU*, struct memory*, size_t*);
+byte popByteOntoStack(struct CPU*, struct memory*, size_t*);
 
 void ResetCpu(struct CPU* cpu, struct memory* mem);
 uint32_t Execute(struct CPU* cpu, struct memory* mem, size_t cycles);
