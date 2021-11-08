@@ -58,6 +58,33 @@ enum INSTRS
 	PLA = 0x68,			// pull accumulator from the stack
 	PLP = 0x28,			// pull copy of the status flags from the stack
 
+	AND_IM = 0x29,			// logical AND operation (immidiately addressing mode)
+	AND_ZP = 0x25,			// logical AND operation (zero page addressing mode)
+	AND_ZPX = 0x35,			// logical AND operation (zero page + x register addressing mode)
+	AND_ABS = 0x2D,			// logical AND operation (absolute addressing mode)
+	AND_ABSX = 0x3D,		// logical AND operation (absolute addressing mode + x register)
+	AND_ABSY = 0x39,		// logical AND operation (absolute addressing mode + y register)
+	AND_INDX = 0x21,		// logical AND operation (indexed-indirect addressing mode with x register)
+	AND_INDY = 0x31,		// logical AND operation (indexed-indirect addressing mode with y register)
+
+	OR_IM = 0x09,			// logical OR operation (immidiately addressing mode)
+	OR_ZP = 0x05,			// logical OR operation (zero page addressing mode)
+	OR_ZPX = 0x15,			// logical OR operation (zero page + x register addressing mode)
+	OR_ABS = 0x0D,			// logical OR operation (absolute addressing mode)
+	OR_ABSX = 0x1D,			// logical OR operation (absolute addressing mode + x register)
+	OR_ABSY = 0x19,			// logical OR operation (absolute addressing mode + y register)
+	OR_INDX = 0x01,			// logical OR operation (indexed-indirect addressing mode with x register)
+	OR_INDY = 0x11,			// logical OR operation (indexed-indirect addressing mode with y register)
+
+	EOR_IM = 0x49,			// logical EOR operation (immidiately addressing mode) 
+	EOR_ZP = 0x45,			// logical EOR operation (zero page addressing mode)
+	EOR_ZPX = 0x55,			// logical EOR operation (zero page + x register addressing mode)
+	EOR_ABS = 0x4D,			// logical EOR operation (absolute addressing mode)
+	EOR_ABSX = 0x5D,		// logical EOR operation (absolute addressing mode + x register)
+	EOR_ABSY = 0x59,		// logical EOR operation (absolute addressing mode + y register)
+	EOR_INDX = 0x41,		// logical EOR operation (indexed-indirect addressing mode with x register)
+	EOR_INDY = 0x51,		// logical EOR operation (indexed-indirect addressing mode with y register)
+
 
 	JSR = 0x20,			// jump to subroutine
 	RTS = 0x60,			// return from subroutine
