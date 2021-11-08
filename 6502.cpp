@@ -54,6 +54,35 @@ static void SetStatusFlags(struct CPU* cpu, const byte reg)
 	cpu->Flags[negativeFlag - 1] = (reg & 0x80) > 0; // not working because number that are bigger than 128 will detect as negative
 }
 
+static byte ZeroPage(struct CPU* cpu, struct memory* mem, size_t* Cycles)
+{
+	byte ZeroPageAddress = FetchByte(cpu, mem, Cycles);
+	return ReadByte(ZeroPageAddress, mem, Cycles);
+}
+
+static byte ZeroPageX(struct CPU* cpu, struct memory* mem, size_t* Cycles)
+{
+	byte ZeroPageAddress = FetchByte(cpu, mem, Cycles);
+	ZeroPageAddress += cpu->x;
+	Cycles--;
+	return ReadByte(ZeroPageAddress, mem, Cycles);
+}
+
+static byte ZeroPageY(struct CPU* cpu, struct memory* mem, size_t* Cycles)
+{
+	byte ZeroPageAddress = FetchByte(cpu, mem, Cycles);
+	ZeroPageAddress += cpu->y;
+	Cycles--;
+	return ReadByte(ZeroPageAddress, mem, Cycles);
+}
+
+
+static byte Absolute(struct CPU* cpu, struct memory* mem, size_t* Cycles)
+{
+	word AbsAddress = FetchWord(cpu, mem, Cycles);
+	return ReadByte(AbsAddress, mem, Cycles);
+}
+
 
 void ResetCpu(struct CPU* cpu, struct memory* mem)
 {
@@ -83,22 +112,17 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 		} break;
 		case LDA_ZP:
 		{
-			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
-			cpu->acc = ReadByte(ZeroPageAddress, mem, &cycles);
+			cpu->acc = ZeroPage(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->acc);
 		} break;
 		case LDA_ZPX:
 		{
-			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
-			ZeroPageAddress += cpu->x;
-			cycles--;
-			cpu->acc = ReadByte(ZeroPageAddress, mem, &cycles);
+			cpu->acc = ZeroPageX(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->acc);
 		} break;
 		case LDA_ABS:
 		{
-			word AbsAddress = FetchWord(cpu, mem, &cycles);
-			cpu->acc = ReadByte(AbsAddress, mem, &cycles);
+			cpu->acc = Absolute(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->acc);
 		} break;
 		case LDA_ABSX:
@@ -150,22 +174,17 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 		} break;
 		case LDX_ZP:
 		{
-			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
-			cpu->x = ReadByte(ZeroPageAddress, mem, &cycles);
+			cpu->x = ZeroPage(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->x);
 		} break;
 		case LDX_ZPY:
 		{
-			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
-			ZeroPageAddress += cpu->y;
-			cycles--;
-			cpu->x = ReadByte(ZeroPageAddress, mem, &cycles);
+			cpu->x = ZeroPageY(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->x);
 		} break;
 		case LDX_ABS:
 		{
-			word AbsAddress = FetchWord(cpu, mem, &cycles);
-			cpu->x = ReadByte(AbsAddress, mem, &cycles);
+			cpu->x = Absolute(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->x);
 		} break;
 		case LDX_ABSY:
@@ -186,22 +205,17 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 		} break;
 		case LDY_ZP:
 		{
-			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
-			cpu->y = ReadByte(ZeroPageAddress, mem, &cycles);
+			cpu->y = ZeroPage(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->y);
 		} break;
 		case LDY_ZPX:
 		{
-			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
-			ZeroPageAddress += cpu->x;
-			cycles--;
-			cpu->y = ReadByte(ZeroPageAddress, mem, &cycles);
+			cpu->y = ZeroPageX(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->y);
 		} break;
 		case LDY_ABS:
 		{
-			word AbsAddress = FetchWord(cpu, mem, &cycles);
-			cpu->y = ReadByte(AbsAddress, mem, &cycles);
+			cpu->y = Absolute(cpu, mem, &cycles);
 			SetStatusFlags(cpu, cpu->y);
 		} break;
 		case LDY_ABSX:
@@ -328,6 +342,159 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 		case PLP:
 		{
 			*cpu->Flags = popByteOntoStack(cpu, mem, &cycles);
+		} break;
+		case AND_IM:
+		{
+			cpu->acc &= FetchByte(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case OR_IM:
+		{
+			cpu->acc |= FetchByte(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case EOR_IM:
+		{
+			cpu->acc ^= FetchByte(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case AND_ZP:
+		{
+			cpu->acc &= ZeroPage(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case OR_ZP:
+		{
+			cpu->acc |= ZeroPage(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case EOR_ZP:
+		{
+			cpu->acc ^= ZeroPage(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case AND_ZPX:
+		{
+			cpu->acc &= ZeroPageX(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case OR_ZPX:
+		{
+			cpu->acc |= ZeroPageX(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case EOR_ZPX:
+		{
+			cpu->acc ^= ZeroPageX(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case AND_ABS:
+		{
+			cpu->acc &= Absolute(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case OR_ABS:
+		{
+			cpu->acc |= Absolute(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case EOR_ABS:
+		{
+			cpu->acc ^= Absolute(cpu, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case AND_ABSX:
+		{
+			word AbsAddress = FetchWord(cpu, mem, &cycles);
+			word AbsAddressX = AbsAddress + cpu->x;
+			cpu->acc &= ReadByte(AbsAddressX, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case OR_ABSX:
+		{
+			word AbsAddress = FetchWord(cpu, mem, &cycles);
+			word AbsAddressX = AbsAddress + cpu->x;
+			cpu->acc |= ReadByte(AbsAddressX, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case EOR_ABSX:
+		{
+			word AbsAddress = FetchWord(cpu, mem, &cycles);
+			word AbsAddressX = AbsAddress + cpu->x;
+			cpu->acc ^= ReadByte(AbsAddressX, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case AND_ABSY:
+		{
+			word AbsAddress = FetchWord(cpu, mem, &cycles);
+			word AbsAddressY = AbsAddress + cpu->y;
+			cpu->acc &= ReadByte(AbsAddressY, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case OR_ABSY:
+		{
+			word AbsAddress = FetchWord(cpu, mem, &cycles);
+			word AbsAddressY = AbsAddress + cpu->y;
+			cpu->acc |= ReadByte(AbsAddressY, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case EOR_ABSY:
+		{
+			word AbsAddress = FetchWord(cpu, mem, &cycles);
+			word AbsAddressY = AbsAddress + cpu->y;
+			cpu->acc ^= ReadByte(AbsAddressY, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case AND_INDX:
+		{
+			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
+			ZeroPageAddress += cpu->x;
+			cycles--;
+			word EffectiveAddress = ReadWord(mem, ZeroPageAddress, &cycles);
+			cpu->acc &= ReadByte(EffectiveAddress, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case OR_INDX:
+		{
+			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
+			ZeroPageAddress += cpu->x;
+			cycles--;
+			word EffectiveAddress = ReadWord(mem, ZeroPageAddress, &cycles);
+			cpu->acc |= ReadByte(EffectiveAddress, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case EOR_INDX:
+		{
+			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
+			ZeroPageAddress += cpu->x;
+			cycles--;
+			word EffectiveAddress = ReadWord(mem, ZeroPageAddress, &cycles);
+			cpu->acc ^= ReadByte(EffectiveAddress, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case AND_INDY:
+		{
+			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
+			word EffectiveAddress = ReadWord(mem, ZeroPageAddress, &cycles);
+			EffectiveAddress += cpu->y;
+			cpu->acc &= ReadByte(EffectiveAddress, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case OR_INDY:
+		{
+			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
+			word EffectiveAddress = ReadWord(mem, ZeroPageAddress, &cycles);
+			EffectiveAddress += cpu->y;
+			cpu->acc |= ReadByte(EffectiveAddress, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case EOR_INDY:
+		{
+			byte ZeroPageAddress = FetchByte(cpu, mem, &cycles);
+			word EffectiveAddress = ReadWord(mem, ZeroPageAddress, &cycles);
+			EffectiveAddress += cpu->y;
+			cpu->acc ^= ReadByte(EffectiveAddress, mem, &cycles);
+			SetStatusFlags(cpu, cpu->acc);
 		} break;
 		case JSR:
 		{
