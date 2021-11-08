@@ -12,7 +12,7 @@ enum ELogicalOP
 	OR
 };
 
-static byte LogicalOP(byte a, byte b, ELogicalOP opcode, struct memory* mem)									// test for logical operations(and, or, eor)
+static byte LogicalOP(byte a, byte b, ELogicalOP opcode, struct memory* mem)						// test for logical operations(and, or, eor)
 {
 	switch (opcode)
 	{
@@ -26,8 +26,6 @@ static byte LogicalOP(byte a, byte b, ELogicalOP opcode, struct memory* mem)				
 		return a | b;
 		break;
 	}
-
-	//throw -1;
 }
 
 static void CheckStatusFlag(const struct CPU& cpu1, const struct CPU& cpu2)
