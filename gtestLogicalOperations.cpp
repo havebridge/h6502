@@ -319,7 +319,7 @@ TEST(testLogOperations, EOR_IM_TEST)									// EOR immidiately
 	gtestLogicalOnARegisterIM(&gtestLogcpu, &gtestLogmem, ELogicalOP::EOR);
 }
 
-TEST(testLogOperations, OR_IM_TEST)										// OR immidiately
+TEST(testLogOperations, OR_IM_TEST)									// OR immidiately
 {
 	gtestLogicalOnARegisterIM(&gtestLogcpu, &gtestLogmem, ELogicalOP::OR);
 }
@@ -329,7 +329,7 @@ TEST(testLogOperations, AND_ZP_TEST)									// AND zero page
 	gtestLogicalRegisterZP(&gtestLogcpu, &gtestLogmem, ELogicalOP::AND);
 }
 
-TEST(testLogOperations, OR_ZP_TEST)										// OR zero page
+TEST(testLogOperations, OR_ZP_TEST)									// OR zero page
 {
 	gtestLogicalRegisterZP(&gtestLogcpu, &gtestLogmem, ELogicalOP::OR);
 }
