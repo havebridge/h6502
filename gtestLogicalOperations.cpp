@@ -369,7 +369,7 @@ TEST(testLogOperations, EOR_ABS_TEST)									// EOR absolute
 	gtestLogicalRegisterAbsolute(&gtestLogcpu, &gtestLogmem, ELogicalOP::EOR);
 }
 
-TEST(testLogOperations, AND_ABSX_TEST)									// AND absolute + x register
+TEST(testLogOperations, AND_ABSX_TEST)								// AND absolute + x register
 {
 	gtestLogicalRegisterAbsoluteX(&gtestLogcpu, &gtestLogmem, ELogicalOP::AND);
 }
@@ -379,12 +379,12 @@ TEST(testLogOperations, OR_ABSX_TEST)									// OR absolute + x register
 	gtestLogicalRegisterAbsoluteX(&gtestLogcpu, &gtestLogmem, ELogicalOP::OR);
 }
 
-TEST(testLogOperations, EOR_ABSX_TEST)									// EOR absolute + x register
+TEST(testLogOperations, EOR_ABSX_TEST)								// EOR absolute + x register
 {
 	gtestLogicalRegisterAbsoluteX(&gtestLogcpu, &gtestLogmem, ELogicalOP::EOR);
 }
 
-TEST(testLogOperations, AND_ABSY_TEST)									// AND absolute + y register
+TEST(testLogOperations, AND_ABSY_TEST)								// AND absolute + y register
 {
 	gtestLogicalRegisterAbsoluteY(&gtestLogcpu, &gtestLogmem, ELogicalOP::AND);
 }
@@ -394,13 +394,13 @@ TEST(testLogOperations, OR_ABSY_TEST)									// OR absolute + y register
 	gtestLogicalRegisterAbsoluteY(&gtestLogcpu, &gtestLogmem, ELogicalOP::OR);
 }
 
-TEST(testLogOperations, EOR_ABSY_TEST)									// EOR absolute + y register
+TEST(testLogOperations, EOR_ABSY_TEST)								// EOR absolute + y register
 {
 	gtestLogicalRegisterAbsoluteY(&gtestLogcpu, &gtestLogmem, ELogicalOP::EOR);
 }
 
 
-TEST(testLogOperations, AND_INDX_TEST)									// AND indx
+TEST(testLogOperations, AND_INDX_TEST)								// AND indx
 {
 	gtestLogicalRegisterINDX(&gtestLogcpu, &gtestLogmem, ELogicalOP::AND);
 }
@@ -410,12 +410,12 @@ TEST(testLogOperations, OR_INDX_TEST)									// OR indx
 	gtestLogicalRegisterINDX(&gtestLogcpu, &gtestLogmem, ELogicalOP::OR);
 }
 
-TEST(testLogOperations, EOR_INDX_TEST)									// EOR indx
+TEST(testLogOperations, EOR_INDX_TEST)								// EOR indx
 {
 	gtestLogicalRegisterINDX(&gtestLogcpu, &gtestLogmem, ELogicalOP::EOR);
 }
 
-TEST(testLogOperations, AND_INDY_TEST)									// AND indy
+TEST(testLogOperations, AND_INDY_TEST)								// AND indy
 {
 	gtestLogicalRegisterINDY(&gtestLogcpu, &gtestLogmem, ELogicalOP::AND);
 }
@@ -425,7 +425,7 @@ TEST(testLogOperations, OR_INDY_TEST)									// OR indy
 	gtestLogicalRegisterINDY(&gtestLogcpu, &gtestLogmem, ELogicalOP::OR);
 }
 
-TEST(testLogOperations, EOR_INDY_TEST)									// EOR indy
+TEST(testLogOperations, EOR_INDY_TEST)								// EOR indy
 {
 	gtestLogicalRegisterINDY(&gtestLogcpu, &gtestLogmem, ELogicalOP::EOR);
 }
