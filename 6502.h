@@ -85,6 +85,11 @@ enum INSTRS
 	EOR_INDX = 0x41,		// logical EOR operation (indexed-indirect addressing mode with x register)
 	EOR_INDY = 0x51,		// logical EOR operation (indexed-indirect addressing mode with y register)
 
+	TAX_IM = 0xAA,			// Transfer accumulator to x register (immidiately addressing mode)
+	TAY_IM = 0xA8,			// Transfer accumulator to y register (immidiately addressing mode)
+	TXA_IM = 0x8A,			// Transfer x register to accumulator (immidiately addressing mode)
+	TYA_IM = 0x98,			// Transfer y register to accumulator (immidiately addressing mode)
+
 
 	JSR = 0x20,			// jump to subroutine
 	RTS = 0x60,			// return from subroutine
