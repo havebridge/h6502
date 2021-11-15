@@ -520,6 +520,30 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 			cycles--;
 			SetStatusFlags(cpu, cpu->acc);
 		} break;
+		case INX_IM:
+		{
+			cpu->x++;
+			cycles--;
+			SetStatusFlags(cpu, cpu->x);
+		} break;
+		case INY_IM:
+		{
+			cpu->y++;
+			cycles--;
+			SetStatusFlags(cpu, cpu->y);
+		} break;
+		case DEX_IM:
+		{
+			cpu->x--;
+			cycles--;
+			SetStatusFlags(cpu, cpu->x);
+		} break;
+		case DEY_IM:
+		{
+			cpu->y--;
+			cycles--;
+			SetStatusFlags(cpu, cpu->y);
+		} break;
 		case JSR:
 		{
 			word SubroutineAddress = FetchWord(cpu, mem, &cycles);
