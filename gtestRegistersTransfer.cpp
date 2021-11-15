@@ -6,16 +6,6 @@ struct CPU gtestTcpu;
 struct memory gtestTmem;
 
 
-static void CheckStatusFlag(const struct CPU& cpu1, const struct CPU& cpu2)
-{
-	EXPECT_FALSE(cpu1.Flags[zeroFlag]);
-	EXPECT_FALSE(cpu1.Flags[negativeFlag - 1]);
-	EXPECT_EQ(cpu1.Flags[interruptDisable], cpu2.Flags[interruptDisable]);
-	EXPECT_EQ(cpu1.Flags[decimalMode], cpu2.Flags[decimalMode]);
-	EXPECT_EQ(cpu1.Flags[breakCommand], cpu2.Flags[breakCommand]);
-	EXPECT_EQ(cpu1.Flags[overflowFlag], cpu2.Flags[overflowFlag]);
-}
-
 static void gtestTransferRegIM(struct CPU* cpu, struct memory* mem, byte const opcode, byte* source, byte* destination)
 {
 	ResetCpu(cpu, mem);
@@ -27,7 +17,6 @@ static void gtestTransferRegIM(struct CPU* cpu, struct memory* mem, byte const o
 
 	EXPECT_EQ(*source, *destination);
 	EXPECT_EQ(numCycles, 2);
-	//EXPECT_FALSE(cpu->Flags[zeroFlag]);
 }
 
 TEST(testTransferReg, TAX_IM_TEST)
