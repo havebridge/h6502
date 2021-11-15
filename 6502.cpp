@@ -496,6 +496,30 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 			cpu->acc ^= ReadByte(EffectiveAddress, mem, &cycles);
 			SetStatusFlags(cpu, cpu->acc);
 		} break;
+		case TAX_IM:
+		{
+			cpu->x = cpu->acc;
+			cycles--;
+			SetStatusFlags(cpu, cpu->x);
+		} break;
+		case TAY_IM:
+		{
+			cpu->y = cpu->acc;
+			cycles--;
+			SetStatusFlags(cpu, cpu->y);
+		} break;
+		case TXA_IM:
+		{
+			cpu->acc = cpu->x;
+			cycles--;
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
+		case TYA_IM:
+		{
+			cpu->acc = cpu->y;
+			cycles--;
+			SetStatusFlags(cpu, cpu->acc);
+		} break;
 		case JSR:
 		{
 			word SubroutineAddress = FetchWord(cpu, mem, &cycles);
