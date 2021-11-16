@@ -544,6 +544,22 @@ uint32_t Execute(struct CPU* cpu, struct memory* mem, uint32_t cycles)
 			cycles--;
 			SetStatusFlags(cpu, cpu->y);
 		} break;
+		case BEQ:
+		{
+			byte offset = FetchByte(cpu, mem, &cycles);
+			if (cpu->Flags[zeroFlag])
+			{
+				const word PCold = cpu->pc;
+				cpu->pc += offset;
+				cycles--;
+
+				const bool PageChanged = (cpu->pc >> 8) != (PCold >> 8);
+				if (PageChanged)
+				{
+					cycles -= 2;
+				}
+			}
+		} break;
 		case JSR:
 		{
 			word SubroutineAddress = FetchWord(cpu, mem, &cycles);
