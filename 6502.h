@@ -95,7 +95,7 @@ enum INSTRS
 	INY_IM = 0xC8,			// Increment y register
 	DEY_IM = 0x88,			// Decrement y register
 
-	BEQ = 0xF0,				// Branch if equal
+	BEQ = 0xF0,			// Branch if equal
 
 	JSR = 0x20,			// jump to subroutine
 	RTS = 0x60,			// return from subroutine
